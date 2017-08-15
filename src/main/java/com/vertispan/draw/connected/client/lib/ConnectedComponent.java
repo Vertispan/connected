@@ -1,4 +1,4 @@
-package com.vertispan.draw.boxesandlines.client.lib;
+package com.vertispan.draw.connected.client.lib;
 
 /*
  * #%L
@@ -27,15 +27,12 @@ import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.event.shared.GwtEvent;
 import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.event.shared.HandlerRegistration;
-import com.vertispan.draw.boxesandlines.client.lib.DragTracker.DragHandling;
+import com.vertispan.draw.connected.client.lib.DragTracker.DragHandling;
 import elemental2.dom.*;
-import elemental2.dom.CSSProperties.HeightUnionType;
-import elemental2.dom.CSSProperties.WidthUnionType;
 import elemental2.dom.CanvasRenderingContext2D.FillStyleUnionType;
 import elemental2.dom.CanvasRenderingContext2D.StrokeStyleUnionType;
 import elemental2.dom.Element;
 import elemental2.dom.Event;
-import jsinterop.base.JsPropertyMap;
 
 import java.util.*;
 import java.util.function.BiConsumer;
@@ -45,9 +42,10 @@ import java.util.function.Function;
 import static elemental2.dom.DomGlobal.document;
 
 /**
- *
+ * Base "widget" for this project. Not a GWT Widget, but wraps a dom element
+ * and wires it up for easy use in a project.
  */
-public class BoxesAndLinesComponent<B, L> implements HasSelectionHandlers<B> {
+public class ConnectedComponent<B, L> implements HasSelectionHandlers<B> {
 //    /**
 //     * Simple interface to describe a tool's behavior when the user clicks or drags on
 //     * the canvas. Both methods take the event to interact with, and a callback to
@@ -95,7 +93,7 @@ public class BoxesAndLinesComponent<B, L> implements HasSelectionHandlers<B> {
     private Point currentEndForNewLine;
 
 
-    public BoxesAndLinesComponent(Function<B, String> boxIdFunct, Function<B, Rect> boxPosFunct, Function<Rect, B> boxCreator, Function<B, String> boxTextFunct, BiConsumer<B, Rect> boxPositionUpdater, Function<L, String> startFunct, Function<L, String> endFunct, BiFunction<B, B, L> lineCreator) {
+    public ConnectedComponent(Function<B, String> boxIdFunct, Function<B, Rect> boxPosFunct, Function<Rect, B> boxCreator, Function<B, String> boxTextFunct, BiConsumer<B, Rect> boxPositionUpdater, Function<L, String> startFunct, Function<L, String> endFunct, BiFunction<B, B, L> lineCreator) {
         this.boxIdFunct = boxIdFunct;
         this.boxPosFunct = boxPosFunct;
         this.boxCreator = boxCreator;

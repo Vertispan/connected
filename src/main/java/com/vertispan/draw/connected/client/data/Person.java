@@ -1,4 +1,4 @@
-package com.vertispan.draw.boxesandlines.client.data;
+package com.vertispan.draw.connected.client.data;
 
 /*
  * #%L
@@ -20,7 +20,7 @@ package com.vertispan.draw.boxesandlines.client.data;
  * #L%
  */
 
-import com.vertispan.draw.boxesandlines.client.lib.Point;
+import com.vertispan.draw.connected.client.lib.Point;
 
 import java.util.Date;
 

@@ -1,3 +1,5 @@
+package com.vertispan.draw.connected.client.lib;
+
 /*
  * #%L
  * connected
@@ -18,17 +20,23 @@
  * #L%
  */
 
-/*move to page itself*/
-html,body{width:100%;height:100%;margin:0;}
-body { display: flex; }
+/**
+ * Created by colin on 7/23/17.
+ */
+public class Line {
+    private final Point start;
+    private final Point end;
 
+    public Line(Point start, Point end) {
+        this.start = start;
+        this.end = end;
+    }
 
-.button { background-color: white; }
-button.button-on { background-color:gray; }
+    public Point getStart() {
+        return start;
+    }
 
-.boxes-and-lines { display: flex; flex-flow: row nowrap; align-items: stretch; flex: 1 1 auto; }
-
-.button-bar { flex: 0 1 auto; }
-.button-bar button {display:block}
-
-.canvas-wrapper { flex: 1 1 auto; overflow: hidden; }
+    public Point getEnd() {
+        return end;
+    }
+}

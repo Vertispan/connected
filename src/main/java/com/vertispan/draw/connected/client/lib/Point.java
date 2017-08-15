@@ -1,4 +1,4 @@
-package com.vertispan.draw.boxesandlines.client.lib;
+package com.vertispan.draw.connected.client.lib;
 
 /*
  * #%L
@@ -21,22 +21,30 @@ package com.vertispan.draw.boxesandlines.client.lib;
  */
 
 /**
- * Created by colin on 7/23/17.
+ * Simple double,double point
  */
-public class Line {
-    private final Point start;
-    private final Point end;
+public class Point {
+    private final double x;
+    private final double y;
 
-    public Line(Point start, Point end) {
-        this.start = start;
-        this.end = end;
+    public Point(double x, double y) {
+        this.x = x;
+        this.y = y;
     }
 
-    public Point getStart() {
-        return start;
+    public double getX() {
+        return x;
     }
 
-    public Point getEnd() {
-        return end;
+    public double getY() {
+        return y;
+    }
+
+    public Point relativeTo(double x, double y) {
+        return new Point(x - this.x, y - this.y);
+    }
+
+    public Point relativeTo(Point other) {
+        return new Point(other.getX() - getX(), other.getY() - getY());
     }
 }

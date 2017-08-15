@@ -1,4 +1,4 @@
-package com.vertispan.draw.boxesandlines.client;
+package com.vertispan.draw.connected.client;
 
 /*
  * #%L
@@ -23,26 +23,28 @@ package com.vertispan.draw.boxesandlines.client;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.i18n.shared.DateTimeFormat;
 import com.google.gwt.i18n.shared.DateTimeFormat.PredefinedFormat;
-import com.vertispan.draw.boxesandlines.client.data.IsParentRelationship;
-import com.vertispan.draw.boxesandlines.client.data.Person;
-import com.vertispan.draw.boxesandlines.client.lib.BoxesAndLinesComponent;
-import com.vertispan.draw.boxesandlines.client.lib.Point;
-import com.vertispan.draw.boxesandlines.client.lib.Rect;
+import com.vertispan.draw.connected.client.data.IsParentRelationship;
+import com.vertispan.draw.connected.client.data.Person;
+import com.vertispan.draw.connected.client.lib.ConnectedComponent;
+import com.vertispan.draw.connected.client.lib.Point;
+import com.vertispan.draw.connected.client.lib.Rect;
 import elemental2.dom.DomGlobal;
 
 import java.util.Date;
 
 /**
- * Demo app that uses the BoxesAndLines module to edit some data
+ * Demo app that uses the Connected module to edit some data
  */
 public class FlowChartEntryPoint implements EntryPoint {
     private static int nextId = 0;
     private static String nextId() {
         return "" + (++nextId);
     }
+    private static final DateTimeFormat format = DateTimeFormat.getFormat(PredefinedFormat.DATE_SHORT);
     public void onModuleLoad() {
-        DateTimeFormat format = DateTimeFormat.getFormat(PredefinedFormat.DATE_SHORT);
-        BoxesAndLinesComponent<Person, IsParentRelationship> boxesAndLines = new BoxesAndLinesComponent<>(
+
+        // Create the component, and tell it how to interact with our data (via lambdas)
+        ConnectedComponent<Person, IsParentRelationship> boxesAndLines = new ConnectedComponent<>(
                 Person::getId,
                 person -> new Rect(person.getPos().getX(), person.getPos().getY(), 200, 150),
                 rect -> {
@@ -58,6 +60,7 @@ public class FlowChartEntryPoint implements EntryPoint {
                 (p1, p2) -> new IsParentRelationship(p1.getId(), p2.getId())
         );
 
+        // Listen for selection, so we can prompt the user in some way to edit the data
         boxesAndLines.addSelectionHandler(event -> {
             Person person = event.getSelectedItem();
             if (person.getBirthday() == null) {
@@ -68,6 +71,7 @@ public class FlowChartEntryPoint implements EntryPoint {
             boxesAndLines.updateBox(person);
         });
 
+        // Sample data
         Person colin = new Person();
         colin.setId(nextId());
         colin.setBirthday(new Date(85, 3, 26));
@@ -95,10 +99,12 @@ public class FlowChartEntryPoint implements EntryPoint {
         abigail.setPos(new Point(150, 200));
         boxesAndLines.addBox(abigail);
 
+        // Sample relationships
         boxesAndLines.addLine(new IsParentRelationship(abigail.getId(), colin.getId()));
         boxesAndLines.addLine(new IsParentRelationship(abigail.getId(), karen.getId()));
 
 
+        // Actually add the element to the body
         DomGlobal.document.body.appendChild(boxesAndLines.getElement());
     }
 }

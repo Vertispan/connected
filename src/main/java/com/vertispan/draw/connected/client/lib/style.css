@@ -1,5 +1,3 @@
-package com.vertispan.draw.boxesandlines.client.lib;
-
 /*
  * #%L
  * connected
@@ -20,31 +18,17 @@ package com.vertispan.draw.boxesandlines.client.lib;
  * #L%
  */
 
-/**
- * Simple double,double point
- */
-public class Point {
-    private final double x;
-    private final double y;
+/* Note that this file isn't actually used, but is inlined in the widget... */
+html,body{width:100%;height:100%;margin:0;}
+body { display: flex; }
 
-    public Point(double x, double y) {
-        this.x = x;
-        this.y = y;
-    }
 
-    public double getX() {
-        return x;
-    }
+.button { background-color: white; }
+button.button-on { background-color:gray; }
 
-    public double getY() {
-        return y;
-    }
+.boxes-and-lines { display: flex; flex-flow: row nowrap; align-items: stretch; flex: 1 1 auto; }
 
-    public Point relativeTo(double x, double y) {
-        return new Point(x - this.x, y - this.y);
-    }
+.button-bar { flex: 0 1 auto; }
+.button-bar button {display:block}
 
-    public Point relativeTo(Point other) {
-        return new Point(other.getX() - getX(), other.getY() - getY());
-    }
-}
+.canvas-wrapper { flex: 1 1 auto; overflow: hidden; }

@@ -1,4 +1,4 @@
-package com.vertispan.draw.boxesandlines.client.lib;
+package com.vertispan.draw.connected.client.lib;
 
 /*
  * #%L
