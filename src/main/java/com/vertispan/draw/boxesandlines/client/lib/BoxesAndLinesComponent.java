@@ -79,7 +79,6 @@ public class BoxesAndLinesComponent<B, L> implements HasSelectionHandlers<B> {
 
     //wiring
     private Map<String, B> boxes = new LinkedHashMap<>();
-//    private Map<String, Rect> boxCoords = new LinkedHashMap<>();
     private final Function<B, String> boxIdFunct;
     private final Function<B, Rect> boxPosFunct;
     private final Function<Rect, B> boxCreator;
@@ -222,7 +221,7 @@ public class BoxesAndLinesComponent<B, L> implements HasSelectionHandlers<B> {
 
     private Void canvasMouseDown(Event event) {
         if (drawMode == DrawMode.DRAW_BOX) {
-            //track mouse, but only as a drag
+            //track mouse, but use drag tool to detect click to avoid moving to a new place
             dragTracker.start(event, new DragHandling() {
                 @Override
                 public void click(MouseEvent event) {
@@ -232,23 +231,9 @@ public class BoxesAndLinesComponent<B, L> implements HasSelectionHandlers<B> {
                     addBox(box);
                     editBox(box);
                 }
-                @Override
-                public void startDrag(MouseEvent event) {
-                }
-                @Override
-                public void moveDrag(MouseEvent event) {
-                }
-                @Override
-                public void endDrag(MouseEvent event) {
-                }
-                @Override
-                public void cancelDrag() {
-                }
             });
             return null;
-        }
-
-        if (drawMode == DrawMode.DRAW_LINE) {
+        } else if (drawMode == DrawMode.DRAW_LINE) {
             //mark the box where we are starting
             startingBoxForNewLine = boxAtPoint(pointFromMouseEvent((MouseEvent) event));
             dragTracker.start(event, new DragHandling() {
@@ -262,11 +247,6 @@ public class BoxesAndLinesComponent<B, L> implements HasSelectionHandlers<B> {
                     if (box != null) {
                         editBox(box);
                     }
-                }
-
-                @Override
-                public void startDrag(MouseEvent event) {
-                    // we already started it (until semantics change, and this means the first move, in which case still ignore...)
                 }
 
                 @Override
@@ -315,11 +295,6 @@ public class BoxesAndLinesComponent<B, L> implements HasSelectionHandlers<B> {
                 }
 
                 @Override
-                public void startDrag(MouseEvent event) {
-                    //move the box... on the first move
-                }
-
-                @Override
                 public void moveDrag(MouseEvent event) {
                     if (start == null) {
                         return;
@@ -328,16 +303,6 @@ public class BoxesAndLinesComponent<B, L> implements HasSelectionHandlers<B> {
                     Rect newBounds = start.translate(mouseStartPosition.relativeTo(currentMousePosition));
                     boxPositionUpdater.accept(box, newBounds);
                     scheduleFrame();
-                }
-
-                @Override
-                public void endDrag(MouseEvent event) {
-                    //nothing to do, already moved
-                }
-
-                @Override
-                public void cancelDrag() {
-                    //leave it where we stopped
                 }
             });
         }
@@ -370,7 +335,6 @@ public class BoxesAndLinesComponent<B, L> implements HasSelectionHandlers<B> {
     public void addBox(B box) {
         String id = boxIdFunct.apply(box);
         boxes.put(id, box);
-//        boxCoords.put(id, boxPosFunct.apply(box));
         scheduleFrame();
     }
     public void removeBox(B box) {

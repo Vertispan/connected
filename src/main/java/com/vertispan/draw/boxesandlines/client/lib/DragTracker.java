@@ -25,17 +25,19 @@ import com.google.gwt.event.shared.HandlerRegistration;
 import elemental2.dom.MouseEvent;
 
 /**
- * Created by colin on 7/24/17.
+ * Mouse tracking through preview events, with a callback interface to implement behavior for a given drag
  */
 public class DragTracker {
 
-
+    /**
+     *
+     */
     interface DragHandling {
-        void click(MouseEvent event);
-        void startDrag(MouseEvent event);
-        void moveDrag(MouseEvent event);
-        void endDrag(MouseEvent event);
-        void cancelDrag();
+        default void click(MouseEvent event) {}
+        default void startDrag(MouseEvent event) {}
+        default void moveDrag(MouseEvent event) {}
+        default void endDrag(MouseEvent event) {}
+        default void cancelDrag() {}
     }
 
     private HandlerRegistration mouseEventPreview;
@@ -51,7 +53,7 @@ public class DragTracker {
         moved = false;
 
         handler.startDrag((MouseEvent) event);//ok, this seems a bit silly, since we are calling it, not vice versa...
-        //switch to User, don't yet know the new metaphor for this...
+        //TODO switch to User, don't yet know the new metaphor for this...
         mouseEventPreview = com.google.gwt.user.client.Event.addNativePreviewHandler(captured -> {
             NativeEvent nativeEvent = captured.getNativeEvent();
             switch (nativeEvent.getType()) {

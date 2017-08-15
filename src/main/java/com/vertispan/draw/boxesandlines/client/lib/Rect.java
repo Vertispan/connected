@@ -21,7 +21,7 @@ package com.vertispan.draw.boxesandlines.client.lib;
  */
 
 /**
- * Created by colin on 7/23/17.
+ * Simple rectangle model for drawing content and checking collisions.
  */
 public class Rect {
     private final double x;
