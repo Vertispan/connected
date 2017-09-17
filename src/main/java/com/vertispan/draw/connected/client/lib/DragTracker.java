@@ -20,8 +20,8 @@ package com.vertispan.draw.connected.client.lib;
  * #L%
  */
 
-import com.google.gwt.dom.client.NativeEvent;
-import com.google.gwt.event.shared.HandlerRegistration;
+import com.vertispan.draw.connected.client.blank.SelectionEvent.HandlerRegistration;
+import elemental2.dom.Event;
 import elemental2.dom.MouseEvent;
 
 /**
@@ -54,19 +54,19 @@ public class DragTracker {
 
         handler.startDrag((MouseEvent) event);//ok, this seems a bit silly, since we are calling it, not vice versa...
         //TODO switch to User, don't yet know the new metaphor for this...
-        mouseEventPreview = com.google.gwt.user.client.Event.addNativePreviewHandler(captured -> {
-            NativeEvent nativeEvent = captured.getNativeEvent();
-            switch (nativeEvent.getType()) {
+        mouseEventPreview = com.vertispan.draw.connected.client.blank.Event.addNativePreviewHandler(captured -> {
+            Event nativeEvent = captured.getNativeEvent();
+            switch (nativeEvent.type) {
                 case "mousemove":
-                    move((MouseEvent) (Object) nativeEvent);
+                    move((MouseEvent) nativeEvent);
                     break;
 
                 case "mouseup":
                     //click, or release drag
                     if (moved) {
-                        endDrag((MouseEvent) (Object) nativeEvent);
+                        endDrag((MouseEvent) nativeEvent);
                     } else {
-                        endClick((MouseEvent) (Object) nativeEvent);
+                        endClick((MouseEvent) nativeEvent);
                     }
                     break;
             }

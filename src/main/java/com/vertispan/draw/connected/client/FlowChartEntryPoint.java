@@ -20,9 +20,9 @@ package com.vertispan.draw.connected.client;
  * #L%
  */
 
+import com.vertispan.draw.connected.client.blank.DateTimeFormat;
+import com.vertispan.draw.connected.client.blank.DateTimeFormat.PredefinedFormat;
 import com.google.gwt.core.client.EntryPoint;
-import com.google.gwt.i18n.shared.DateTimeFormat;
-import com.google.gwt.i18n.shared.DateTimeFormat.PredefinedFormat;
 import com.vertispan.draw.connected.client.data.IsParentRelationship;
 import com.vertispan.draw.connected.client.data.Person;
 import com.vertispan.draw.connected.client.lib.ConnectedComponent;

@@ -20,13 +20,12 @@ package com.vertispan.draw.connected.client.lib;
  * #L%
  */
 
-import com.google.gwt.dom.client.StyleInjector;
-import com.google.gwt.event.logical.shared.HasSelectionHandlers;
-import com.google.gwt.event.logical.shared.SelectionEvent;
-import com.google.gwt.event.logical.shared.SelectionHandler;
-import com.google.gwt.event.shared.GwtEvent;
-import com.google.gwt.event.shared.HandlerManager;
-import com.google.gwt.event.shared.HandlerRegistration;
+import com.vertispan.draw.connected.client.blank.HandlerManager;
+import com.vertispan.draw.connected.client.blank.SelectionEvent;
+import com.vertispan.draw.connected.client.blank.SelectionEvent.HandlerRegistration;
+import com.vertispan.draw.connected.client.blank.SelectionEvent.HasSelectionHandlers;
+import com.vertispan.draw.connected.client.blank.SelectionEvent.SelectionHandler;
+import com.vertispan.draw.connected.client.blank.StyleInjector;
 import com.vertispan.draw.connected.client.lib.DragTracker.DragHandling;
 import elemental2.dom.*;
 import elemental2.dom.CanvasRenderingContext2D.FillStyleUnionType;
@@ -165,13 +164,12 @@ public class ConnectedComponent<B, L> implements HasSelectionHandlers<B> {
         return root;
     }
 
-    @Override
     public HandlerRegistration addSelectionHandler(SelectionHandler<B> selectionHandler) {
-        return handlerManager.addHandler(SelectionEvent.getType(), selectionHandler);
+        return handlerManager.addHandler(SelectionEvent.class, selectionHandler);
     }
 
-    @Override
-    public void fireEvent(GwtEvent<?> gwtEvent) {
+
+    public void fireEvent(SelectionEvent<B> gwtEvent) {
         handlerManager.fireEvent(gwtEvent);
     }
 
