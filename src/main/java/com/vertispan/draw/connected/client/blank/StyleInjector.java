@@ -24,13 +24,15 @@ import elemental2.dom.DomGlobal;
 import elemental2.dom.Element;
 import elemental2.dom.HTMLStyleElement;
 
+import static elemental2.dom.DomGlobal.document;
+
 /**
  * Created by colin on 9/16/17.
  */
 public class StyleInjector {
     public static void inject(String cssContent) {
-        HTMLStyleElement style = (HTMLStyleElement) DomGlobal.document.createElement("style");
-        style.appendChild(DomGlobal.document.createTextNode(cssContent));
-        DomGlobal.document.head.appendChild(style);
+        HTMLStyleElement style = (HTMLStyleElement) document.createElement("style");
+        style.appendChild(document.createTextNode(cssContent));
+        document.head.appendChild(style);
     }
 }

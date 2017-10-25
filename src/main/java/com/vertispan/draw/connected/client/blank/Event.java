@@ -27,6 +27,8 @@ import elemental2.dom.EventListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import static elemental2.dom.DomGlobal.window;
+
 /**
  * Created by colin on 9/16/17.
  */
@@ -38,26 +40,26 @@ public class Event {
         dispatchCapturedEvent = Event::dispatchCapturedEvent;
         dispatchCapturedMouseEvent = Event::dispatchCapturedEvent;
 
-        DomGlobal.window.addEventListener("click", dispatchCapturedMouseEvent, true);
-        DomGlobal.window.addEventListener("dblclick", dispatchCapturedMouseEvent, true);
-        DomGlobal.window.addEventListener("mousedown", dispatchCapturedMouseEvent, true);
-        DomGlobal.window.addEventListener("mouseup", dispatchCapturedMouseEvent, true);
-        DomGlobal.window.addEventListener("mousemove", dispatchCapturedMouseEvent, true);
-        DomGlobal.window.addEventListener("mouseover", dispatchCapturedMouseEvent, true);
-        DomGlobal.window.addEventListener("mouseout", dispatchCapturedMouseEvent, true);
-        DomGlobal.window.addEventListener("mousewheel", dispatchCapturedMouseEvent, true);
+        window.addEventListener("click", dispatchCapturedMouseEvent, true);
+        window.addEventListener("dblclick", dispatchCapturedMouseEvent, true);
+        window.addEventListener("mousedown", dispatchCapturedMouseEvent, true);
+        window.addEventListener("mouseup", dispatchCapturedMouseEvent, true);
+        window.addEventListener("mousemove", dispatchCapturedMouseEvent, true);
+        window.addEventListener("mouseover", dispatchCapturedMouseEvent, true);
+        window.addEventListener("mouseout", dispatchCapturedMouseEvent, true);
+        window.addEventListener("mousewheel", dispatchCapturedMouseEvent, true);
 
-        DomGlobal.window.addEventListener("keydown", dispatchCapturedEvent, true);
-        DomGlobal.window.addEventListener("keyup", dispatchCapturedEvent, true);
-        DomGlobal.window.addEventListener("keypress", dispatchCapturedEvent, true);
+        window.addEventListener("keydown", dispatchCapturedEvent, true);
+        window.addEventListener("keyup", dispatchCapturedEvent, true);
+        window.addEventListener("keypress", dispatchCapturedEvent, true);
 
-        DomGlobal.window.addEventListener("touchstart", dispatchCapturedMouseEvent, true);
-        DomGlobal.window.addEventListener("touchend", dispatchCapturedMouseEvent, true);
-        DomGlobal.window.addEventListener("touchmove", dispatchCapturedMouseEvent, true);
-        DomGlobal.window.addEventListener("touchcancel", dispatchCapturedMouseEvent, true);
-        DomGlobal.window.addEventListener("gesturestart", dispatchCapturedMouseEvent, true);
-        DomGlobal.window.addEventListener("gestureend", dispatchCapturedMouseEvent, true);
-        DomGlobal.window.addEventListener("gesturechange", dispatchCapturedMouseEvent, true);
+        window.addEventListener("touchstart", dispatchCapturedMouseEvent, true);
+        window.addEventListener("touchend", dispatchCapturedMouseEvent, true);
+        window.addEventListener("touchmove", dispatchCapturedMouseEvent, true);
+        window.addEventListener("touchcancel", dispatchCapturedMouseEvent, true);
+        window.addEventListener("gesturestart", dispatchCapturedMouseEvent, true);
+        window.addEventListener("gestureend", dispatchCapturedMouseEvent, true);
+        window.addEventListener("gesturechange", dispatchCapturedMouseEvent, true);
 
     }
     public interface NativePreviewHandler {
