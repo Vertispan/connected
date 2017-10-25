@@ -1,6 +1,8 @@
+package com.vertispan.draw.connected.client.lib
+
 /*
  * #%L
- * Connected
+ * connected
  * %%
  * Copyright (C) 2017 Vertispan
  * %%
@@ -17,12 +19,25 @@
  * limitations under the License.
  * #L%
  */
-var internalJsUtil = goog.require('jsinterop.base.InternalJsUtil');
 
-// monkeypatch the bits of jsinterop-base we use
-internalJsUtil.getIndexed=function(array, index) { return array[index]; };
-internalJsUtil.getLength=function(array) { return array.length; };
+/**
+ * Simple rectangle model for drawing content and checking collisions.
+ */
+class Rect(val x: Double, val y: Double, val w: Double, val h: Double) {
 
-// Seems this can't run right away, circular deps haven't been resolved yet.
-setTimeout(function(){ FlowChartEntryPoint.$create__().m_onModuleLoad__()}, 0);
+    fun center(): Point {
+        return Point(x + w / 2, y + h / 2)
+    }
 
+    operator fun contains(point: Point): Boolean {
+        return x <= point.x && x + w >= point.x &&
+                y <= point.y && y + h >= point.y
+    }
+
+    fun translate(point: Point): Rect {
+        return Rect(x + point.x, y + point.y, w, h)
+    }
+
+    val topLeft: Point
+        get() = Point(x, y)
+}

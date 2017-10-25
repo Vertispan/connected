@@ -1,8 +1,8 @@
-package com.vertispan.draw.connected.client.lib;
+package com.vertispan.draw.connected.client.blank
 
 /*
  * #%L
- * connected
+ * Connected
  * %%
  * Copyright (C) 2017 Vertispan
  * %%
@@ -20,23 +20,25 @@ package com.vertispan.draw.connected.client.lib;
  * #L%
  */
 
+import java.util.Date
+
 /**
- * Created by colin on 7/23/17.
+ * Created by colin on 9/16/17.
  */
-public class Line {
-    private final Point start;
-    private final Point end;
+class DateTimeFormat {
 
-    public Line(Point start, Point end) {
-        this.start = start;
-        this.end = end;
+    fun format(date: Date): String {
+        return "TODO"
     }
 
-    public Point getStart() {
-        return start;
+    enum class PredefinedFormat {
+        DATE_SHORT
     }
 
-    public Point getEnd() {
-        return end;
+    companion object {
+
+        fun getFormat(dateShort: PredefinedFormat): DateTimeFormat {
+            return DateTimeFormat()
+        }
     }
 }

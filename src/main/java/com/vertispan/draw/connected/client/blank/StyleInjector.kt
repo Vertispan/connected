@@ -1,4 +1,4 @@
-package com.google.gwt.core.client;
+package com.vertispan.draw.connected.client.blank
 
 /*
  * #%L
@@ -20,9 +20,19 @@ package com.google.gwt.core.client;
  * #L%
  */
 
+import elemental2.dom.DomGlobal
+import elemental2.dom.Element
+import elemental2.dom.HTMLStyleElement
+
+import elemental2.dom.DomGlobal.document
+
 /**
  * Created by colin on 9/16/17.
  */
-public interface EntryPoint {
-    void onModuleLoad();
+object StyleInjector {
+    fun inject(cssContent: String) {
+        val style = document.createElement("style") as HTMLStyleElement
+        style.appendChild(document.createTextNode(cssContent))
+        document.head.appendChild(style)
+    }
 }

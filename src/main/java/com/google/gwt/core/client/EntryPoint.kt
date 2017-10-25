@@ -1,8 +1,8 @@
-package com.vertispan.draw.connected.client.lib;
+package com.google.gwt.core.client
 
 /*
  * #%L
- * connected
+ * Connected
  * %%
  * Copyright (C) 2017 Vertispan
  * %%
@@ -21,30 +21,8 @@ package com.vertispan.draw.connected.client.lib;
  */
 
 /**
- * Simple double,double point
+ * Created by colin on 9/16/17.
  */
-public class Point {
-    private final double x;
-    private final double y;
-
-    public Point(double x, double y) {
-        this.x = x;
-        this.y = y;
-    }
-
-    public double getX() {
-        return x;
-    }
-
-    public double getY() {
-        return y;
-    }
-
-    public Point relativeTo(double x, double y) {
-        return new Point(x - this.x, y - this.y);
-    }
-
-    public Point relativeTo(Point other) {
-        return new Point(other.getX() - getX(), other.getY() - getY());
-    }
+interface EntryPoint {
+    fun onModuleLoad()
 }

@@ -1,4 +1,4 @@
-package com.vertispan.draw.connected.client.blank;
+package com.vertispan.draw.connected.client.blank
 
 /*
  * #%L
@@ -20,22 +20,22 @@ package com.vertispan.draw.connected.client.blank;
  * #L%
  */
 
-import java.util.Date;
+import com.vertispan.draw.connected.client.blank.SelectionEvent.HasSelectionHandlers
+
+import java.util.ArrayList
 
 /**
  * Created by colin on 9/16/17.
  */
-public class DateTimeFormat {
+class HandlerManager(private val instance: HasSelectionHandlers<*>) {
+    private val handlers = ArrayList<(SelectionEvent<*>) -> Unit>()//TODO make this a map again...
 
-    public static DateTimeFormat getFormat(PredefinedFormat dateShort) {
-        return new DateTimeFormat();
+    fun <B> addHandler(selectionHandler: (SelectionEvent<B>) -> Unit): (Unit) -> Unit {
+        handlers.add(selectionHandler as (SelectionEvent<*>) -> Unit)
+        return { handlers.remove(selectionHandler) }
     }
 
-    public String format(Date date) {
-        return "TODO";
-    }
-
-    public enum PredefinedFormat {
-        DATE_SHORT
+    fun fireEvent(gwtEvent: SelectionEvent<*>) {
+        handlers.forEach { handler -> handler(gwtEvent as SelectionEvent<Any>) }
     }
 }

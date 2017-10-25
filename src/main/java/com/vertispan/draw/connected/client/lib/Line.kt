@@ -1,6 +1,8 @@
+package com.vertispan.draw.connected.client.lib
+
 /*
  * #%L
- * Connected
+ * connected
  * %%
  * Copyright (C) 2017 Vertispan
  * %%
@@ -17,12 +19,8 @@
  * limitations under the License.
  * #L%
  */
-var internalJsUtil = goog.require('jsinterop.base.InternalJsUtil');
 
-// monkeypatch the bits of jsinterop-base we use
-internalJsUtil.getIndexed=function(array, index) { return array[index]; };
-internalJsUtil.getLength=function(array) { return array.length; };
-
-// Seems this can't run right away, circular deps haven't been resolved yet.
-setTimeout(function(){ FlowChartEntryPoint.$create__().m_onModuleLoad__()}, 0);
-
+/**
+ * Created by colin on 7/23/17.
+ */
+class Line(val start: Point, val end: Point)

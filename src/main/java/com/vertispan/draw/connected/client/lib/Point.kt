@@ -1,8 +1,8 @@
-package com.vertispan.draw.connected.client.blank;
+package com.vertispan.draw.connected.client.lib
 
 /*
  * #%L
- * Connected
+ * connected
  * %%
  * Copyright (C) 2017 Vertispan
  * %%
@@ -20,19 +20,16 @@ package com.vertispan.draw.connected.client.blank;
  * #L%
  */
 
-import elemental2.dom.DomGlobal;
-import elemental2.dom.Element;
-import elemental2.dom.HTMLStyleElement;
-
-import static elemental2.dom.DomGlobal.document;
-
 /**
- * Created by colin on 9/16/17.
+ * Simple double,double point
  */
-public class StyleInjector {
-    public static void inject(String cssContent) {
-        HTMLStyleElement style = (HTMLStyleElement) document.createElement("style");
-        style.appendChild(document.createTextNode(cssContent));
-        document.head.appendChild(style);
+class Point(val x: Double, val y: Double) {
+
+    fun relativeTo(x: Double, y: Double): Point {
+        return Point(x - this.x, y - this.y)
+    }
+
+    fun relativeTo(other: Point): Point {
+        return Point(other.x - x, other.y - y)
     }
 }
