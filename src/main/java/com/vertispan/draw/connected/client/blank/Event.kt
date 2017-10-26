@@ -20,13 +20,9 @@ package com.vertispan.draw.connected.client.blank
  * #L%
  */
 
-import com.vertispan.draw.connected.client.blank.SelectionEvent.HandlerRegistration
-import elemental2.dom.DomGlobal
-import elemental2.dom.EventListener
-
+import org.w3c.dom.events.EventListener
 import java.util.ArrayList
-
-import elemental2.dom.DomGlobal.window
+import kotlin.browser.window
 
 /**
  * Created by colin on 9/16/17.
@@ -71,7 +67,7 @@ object Event {
         val isCanceled = false
         val isConsumed = false
         private val isFirstHandler = false
-        var nativeEvent: elemental2.dom.Event? = null
+        var nativeEvent: org.w3c.dom.events.Event? = null
 
         companion object {
             val singleton = NativePreviewEvent()
@@ -84,7 +80,7 @@ object Event {
         return { previewHandlers.remove(handler) }
     }
 
-    private fun dispatchCapturedEvent(event: elemental2.dom.Event) {
+    private fun dispatchCapturedEvent(event: org.w3c.dom.events.Event) {
         //in theory we could branch here and support gwt-user's old mouse capture tools
 
         //all handlers get a crack at this, then we check if it was canceled

@@ -20,9 +20,8 @@ package com.vertispan.draw.connected.client.lib
  * #L%
  */
 
-import com.vertispan.draw.connected.client.blank.SelectionEvent.HandlerRegistration
-import elemental2.dom.Event
-import elemental2.dom.MouseEvent
+import org.w3c.dom.events.Event
+import org.w3c.dom.events.MouseEvent
 
 /**
  * Mouse tracking through preview events, with a callback interface to implement behavior for a given drag
@@ -55,9 +54,9 @@ class DragTracker {
 
     private var handler: DragHandling? = null
 
-    fun start(event: elemental2.dom.Event, handler: DragHandling) {
+    fun start(event: Event, handler: DragHandling) {
         this.handler = handler
-        assert(!dragging)
+//        assert(!dragging)
         dragging = true
         moved = false
 
@@ -83,8 +82,8 @@ class DragTracker {
 
     private fun endClick(nativeEvent: MouseEvent) {
         //technically not dragging. probably should be called tracking instead.
-        assert(dragging)
-        assert(!moved)
+//        assert(dragging)
+//        assert(!moved)
 
         if (handler != null) {
             handler!!.click(nativeEvent)
@@ -95,8 +94,8 @@ class DragTracker {
     }
 
     private fun endDrag(nativeEvent: MouseEvent) {
-        assert(dragging)
-        assert(moved)
+//        assert(dragging)
+//        assert(moved)
 
         if (handler != null) {
             handler!!.endDrag(nativeEvent)
@@ -107,7 +106,7 @@ class DragTracker {
     }
 
     private fun move(nativeEvent: MouseEvent) {
-        assert(dragging)
+//        assert(dragging)
         moved = true
 
         if (handler != null) {

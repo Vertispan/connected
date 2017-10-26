@@ -9,9 +9,9 @@ package com.vertispan.draw.connected.client.blank
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -20,11 +20,8 @@ package com.vertispan.draw.connected.client.blank
  * #L%
  */
 
-import elemental2.dom.DomGlobal
-import elemental2.dom.Element
-import elemental2.dom.HTMLStyleElement
-
-import elemental2.dom.DomGlobal.document
+import org.w3c.dom.HTMLStyleElement
+import kotlin.browser.document
 
 /**
  * Created by colin on 9/16/17.
@@ -33,6 +30,6 @@ object StyleInjector {
     fun inject(cssContent: String) {
         val style = document.createElement("style") as HTMLStyleElement
         style.appendChild(document.createTextNode(cssContent))
-        document.head.appendChild(style)
+        document.head!!.appendChild(style)
     }
 }

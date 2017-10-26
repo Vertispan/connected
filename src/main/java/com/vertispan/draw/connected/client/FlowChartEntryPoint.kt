@@ -28,9 +28,10 @@ import com.vertispan.draw.connected.client.data.Person
 import com.vertispan.draw.connected.client.lib.ConnectedComponent
 import com.vertispan.draw.connected.client.lib.Point
 import com.vertispan.draw.connected.client.lib.Rect
-import elemental2.dom.DomGlobal
 
 import java.util.Date
+import kotlin.browser.document
+import kotlin.browser.window
 
 /**
  * Demo app that uses the Connected module to edit some data
@@ -58,8 +59,8 @@ class FlowChartEntryPoint : EntryPoint {
             if (person.birthday == null) {
                 person.birthday = Date()
             }
-            val newName = DomGlobal.prompt("change name?", person.name)
-            person.name = newName
+            val newName = window.prompt("change name?", person.name)
+            person.name = newName!!
             boxesAndLines.updateBox(person)
         }
 
@@ -99,7 +100,7 @@ class FlowChartEntryPoint : EntryPoint {
 
 
         // Actually add the element to the body
-        DomGlobal.document.body.appendChild(boxesAndLines.element)
+        document.body!!.appendChild(boxesAndLines.element)
     }
 
     companion object {

@@ -27,20 +27,17 @@ import com.vertispan.draw.connected.client.blank.SelectionEvent.HasSelectionHand
 import com.vertispan.draw.connected.client.blank.SelectionEvent.SelectionHandler
 import com.vertispan.draw.connected.client.blank.StyleInjector
 import com.vertispan.draw.connected.client.lib.DragTracker.DragHandling
-import elemental2.dom.*
-import elemental2.dom.CanvasRenderingContext2D.FillStyleUnionType
-import elemental2.dom.CanvasRenderingContext2D.StrokeStyleUnionType
-import elemental2.dom.Element
-import elemental2.dom.Event
+import org.w3c.dom.*
+import org.w3c.dom.events.Event
+import org.w3c.dom.events.MouseEvent
 
 import java.util.*
 import java.util.function.BiConsumer
 import java.util.function.BiFunction
 import java.util.function.Function
 
-import elemental2.dom.DomGlobal.document
-import elemental2.dom.Element.OnclickCallbackFn
-import elemental2.dom.Element.OnmousedownCallbackFn
+import kotlin.browser.document
+import kotlin.browser.window
 
 /**
  * Base "widget" for this project. Not a GWT Widget, but wraps a dom element
@@ -78,7 +75,7 @@ class ConnectedComponent<B, L>(
     private val drawBoxTool: HTMLButtonElement
     private val drawLineTool: HTMLButtonElement
     private val moveTool: HTMLButtonElement
-    private val canvasWrapper: Element
+    private val canvasWrapper: HTMLCanvasElement
     private val canvas: HTMLCanvasElement
 
     //logic
@@ -106,28 +103,28 @@ class ConnectedComponent<B, L>(
         buttonBar.classList.add("button-bar")
 
         drawBoxTool = document.createElement("button") as HTMLButtonElement
-        drawBoxTool.onclick = OnclickCallbackFn { this.drawBox(it) }
+        drawBoxTool.onclick = this::drawBox
         drawBoxTool.innerHTML = "Draw Box"
         drawBoxTool.className = "button"
 
         drawLineTool = document.createElement("button") as HTMLButtonElement
-        drawLineTool.onclick = OnclickCallbackFn { this.drawLine(it) }
+        drawLineTool.onclick = this::drawLine
         drawLineTool.innerHTML = "Draw Line"
         drawLineTool.className = "button"
 
         moveTool = document.createElement("button") as HTMLButtonElement
-        moveTool.onclick = OnclickCallbackFn { this.move(it) }
+        moveTool.onclick = this::move
         moveTool.innerHTML = "Move"
         moveTool.className = "button"
 
-        canvasWrapper = document.createElement("div")
+        canvasWrapper = document.createElement("div") as HTMLCanvasElement
         canvasWrapper.className = "canvas-wrapper"
 
 
         canvas = document.createElement("canvas") as HTMLCanvasElement
         //        canvas.width = 1000;
         //        canvas.height = 1000;
-        canvas.onmousedown = OnmousedownCallbackFn { this.canvasMouseDown(it) }//use for drags, captured events deal with the rest
+        canvas.onmousedown = this::canvasMouseDown//use for drags, captured events deal with the rest
 
         //TODO CSS that doesn't look terrible, and HTML template for this whole thing
         buttonBar.appendChild(drawBoxTool)
@@ -155,7 +152,7 @@ class ConnectedComponent<B, L>(
 
 
         //TODO this will leak after widget is detached...
-        DomGlobal.window.addEventListener("resize") { event -> scheduleFrame() }
+        window.addEventListener("resize", { event -> scheduleFrame() })
     }
 
     override fun addSelectionHandler(selectionHandler: (SelectionEvent<B>) -> Unit): (Unit) -> Unit {
@@ -172,8 +169,8 @@ class ConnectedComponent<B, L>(
 
             //turn off all buttons
             val buttons = element.querySelectorAll("button.button")
-            for (i in 0..buttons.getLength() - 1) {
-                buttons.getAt(i).classList.remove("button-on")
+            for (i in 0..buttons.length - 1) {
+                (buttons.get(i) as HTMLButtonElement).classList.remove("button-on")
             }
 
             //turn on currently set button
@@ -189,22 +186,19 @@ class ConnectedComponent<B, L>(
         }
     }
 
-    private fun drawBox(event: Event): Void? {
+    private fun drawBox(event: Event) {
         setDrawMode(DrawMode.DRAW_BOX)
-        return null
     }
 
-    private fun drawLine(event: Event): Void? {
+    private fun drawLine(event: Event) {
         setDrawMode(DrawMode.DRAW_LINE)
-        return null
     }
 
-    private fun move(event: Event): Void? {
+    private fun move(event: Event) {
         setDrawMode(DrawMode.MOVE)
-        return null
     }
 
-    private fun canvasMouseDown(event: Event): Void? {
+    private fun canvasMouseDown(event: Event) {
         if (drawMode == DrawMode.DRAW_BOX) {
             //track mouse, but use drag tool to detect click to avoid moving to a new place
             dragTracker.start(event, object : DragHandling {
@@ -216,7 +210,6 @@ class ConnectedComponent<B, L>(
                     editBox(box)
                 }
             })
-            return null
         } else if (drawMode == DrawMode.DRAW_LINE) {
             //mark the box where we are starting
             startingBoxForNewLine = boxAtPoint(pointFromMouseEvent(event as MouseEvent))
@@ -284,8 +277,6 @@ class ConnectedComponent<B, L>(
                 }
             })
         }
-
-        return null
     }
 
     private fun boxAtPoint(point: Point): B? {
@@ -346,10 +337,9 @@ class ConnectedComponent<B, L>(
             return
         }
         frameScheduled = true
-        DomGlobal.requestAnimationFrame { timestamp ->
+        window.requestAnimationFrame { timestamp ->
             frameScheduled = false
             draw()
-            null
         }
     }
 
@@ -358,7 +348,7 @@ class ConnectedComponent<B, L>(
         val context = canvas.getContext("2d") as CanvasRenderingContext2D
 
         //resize to fit, if needed (this is ... expensive to check, and wrong if we are on a devicePixelRatio!=1 screen)
-        val size = canvasWrapper.boundingClientRect
+        val size = js("canvasWrapper.boundingClientRect")
         if (size.height != canvas.height || size.width != canvas.width) {
             //assuming there is something to be gained by not tweaking these directly, but should measure...
             //            Double devicePixelRatio = ((JsPropertyMap<Double>) DomGlobal.window).get("devicePixelRatio");
@@ -371,10 +361,10 @@ class ConnectedComponent<B, L>(
 
         //remove all current content
         //TODO in the future detect changes and apply a clip?
-        context.clearRect(0.0, 0.0, canvas.width, canvas.height)
+        context.clearRect(0.0, 0.0, canvas.width.toDouble(), canvas.height.toDouble())
 
-        context.fillStyle = FillStyleUnionType.of("#ffffff")
-        context.strokeStyle = StrokeStyleUnionType.of("#000000")
+        context.fillStyle = "#ffffff"
+        context.strokeStyle = "#000000"
         context.font = "14px sans-serif"
 
         //draw all lines, then all boxes. boxes have a fill, so the lines always are from the center of a box, starting at the edge
@@ -406,11 +396,11 @@ class ConnectedComponent<B, L>(
             val padding = 10
             val fontHeight = 14
             val lines = boxTextFunct(box).split("\n".toRegex()).dropLastWhile({ it.isEmpty() }).toTypedArray()
-            context.fillStyle = FillStyleUnionType.of("#000000")
+            context.fillStyle = "#000000"
             for (lineNo in lines.indices) {
                 context.fillText(lines[lineNo], padding + position.x, fontHeight.toDouble() + padding.toDouble() + position.y + (fontHeight * lineNo).toDouble())
             }
-            context.fillStyle = FillStyleUnionType.of("#ffffff")
+            context.fillStyle = "#ffffff"
         }
 
     }
