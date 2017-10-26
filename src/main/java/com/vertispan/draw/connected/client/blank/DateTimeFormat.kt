@@ -1,5 +1,7 @@
 package com.vertispan.draw.connected.client.blank
 
+import kotlin.js.Date
+
 /*
  * #%L
  * Connected
@@ -20,7 +22,6 @@ package com.vertispan.draw.connected.client.blank
  * #L%
  */
 
-import java.util.Date
 
 /**
  * Created by colin on 9/16/17.

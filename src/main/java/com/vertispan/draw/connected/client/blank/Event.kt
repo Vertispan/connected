@@ -21,7 +21,6 @@ package com.vertispan.draw.connected.client.blank
  */
 
 import org.w3c.dom.events.EventListener
-import java.util.ArrayList
 import kotlin.browser.window
 
 /**

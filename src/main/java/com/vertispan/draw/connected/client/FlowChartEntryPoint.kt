@@ -29,9 +29,9 @@ import com.vertispan.draw.connected.client.lib.ConnectedComponent
 import com.vertispan.draw.connected.client.lib.Point
 import com.vertispan.draw.connected.client.lib.Rect
 
-import java.util.Date
 import kotlin.browser.document
 import kotlin.browser.window
+import kotlin.js.Date
 
 /**
  * Demo app that uses the Connected module to edit some data
@@ -70,7 +70,7 @@ class FlowChartEntryPoint : EntryPoint {
                 "Colin",
                 "M",
                 "Annapolis, MD",
-                Date(85, 3, 26),
+                Date(),//TODO why can't i actually pass in values...
                 Point(10.0, 10.0)
         )
         boxesAndLines.addBox(colin)
@@ -80,7 +80,7 @@ class FlowChartEntryPoint : EntryPoint {
                 "Karen",
                 "F",
                 "Pontiac, MI",
-                Date(84, 4, 13),
+                Date(),//TODO why can't i actually pass in values...
                 Point(300.0, 10.0)
         )
 
@@ -89,7 +89,7 @@ class FlowChartEntryPoint : EntryPoint {
                 "Abigail",
                 "F",
                 "Maple Grove, MN",
-                Date(116, 8, 24),
+                Date(),//TODO why can't i actually pass in values...
                 Point(150.0, 200.0)
         )
         boxesAndLines.addBox(abigail)

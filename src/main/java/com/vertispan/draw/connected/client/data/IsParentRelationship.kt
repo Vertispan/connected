@@ -28,20 +28,21 @@ class IsParentRelationship (
     var parentId: String
 ) {
 
-    override fun equals(o: Any?): Boolean {
-        if (this === o) return true
-        if (o == null || javaClass != o.javaClass) return false
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other == null || this::class.js != other::class.js) return false
 
-        val that = o as IsParentRelationship?
+        other as IsParentRelationship
 
-        if (childId != that!!.childId) return false
-        return parentId == that.parentId
+        if (childId != other.childId) return false
+        if (parentId != other.parentId) return false
 
+        return true
     }
 
     override fun hashCode(): Int {
-        var result = childId!!.hashCode()
-        result = 31 * result + parentId!!.hashCode()
+        var result = childId.hashCode()
+        result = 31 * result + parentId.hashCode()
         return result
     }
 }

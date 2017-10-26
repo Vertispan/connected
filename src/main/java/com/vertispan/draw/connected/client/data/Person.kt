@@ -22,7 +22,7 @@ package com.vertispan.draw.connected.client.data
 
 import com.vertispan.draw.connected.client.lib.Point
 
-import java.util.Date
+import kotlin.js.Date
 
 /**
  * Simple "vertex" or "box" data model
@@ -38,26 +38,29 @@ class Person (
     var pos: Point
 ) {
 
-    override fun equals(o: Any?): Boolean {
-        if (this === o) return true
-        if (o == null || javaClass != o.javaClass) return false
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other == null || this::class.js != other::class.js) return false
 
-        val person = o as Person?
+        other as Person
 
-        if (if (id != null) id != person!!.id else person!!.id != null) return false
-        if (if (name != null) name != person.name else person.name != null) return false
-        if (if (sex != null) sex != person.sex else person.sex != null) return false
-        if (if (birthplace != null) birthplace != person.birthplace else person.birthplace != null) return false
-        return !if (birthday != null) birthday != person.birthday else person.birthday != null
+        if (id != other.id) return false
+        if (name != other.name) return false
+        if (sex != other.sex) return false
+        if (birthplace != other.birthplace) return false
+        if (birthday != other.birthday) return false
+        if (pos != other.pos) return false
 
+        return true
     }
 
     override fun hashCode(): Int {
-        var result = if (id != null) id!!.hashCode() else 0
-        result = 31 * result + if (name != null) name!!.hashCode() else 0
-        result = 31 * result + if (sex != null) sex!!.hashCode() else 0
-        result = 31 * result + if (birthplace != null) birthplace!!.hashCode() else 0
-        result = 31 * result + if (birthday != null) birthday!!.hashCode() else 0
+        var result = id.hashCode()
+        result = 31 * result + name.hashCode()
+        result = 31 * result + sex.hashCode()
+        result = 31 * result + birthplace.hashCode()
+        result = 31 * result + birthday.hashCode()
+        result = 31 * result + pos.hashCode()
         return result
     }
 }

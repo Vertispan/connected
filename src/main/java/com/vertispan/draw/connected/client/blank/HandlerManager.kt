@@ -22,8 +22,6 @@ package com.vertispan.draw.connected.client.blank
 
 import com.vertispan.draw.connected.client.blank.SelectionEvent.HasSelectionHandlers
 
-import java.util.ArrayList
-
 /**
  * Created by colin on 9/16/17.
  */

@@ -31,11 +31,6 @@ import org.w3c.dom.*
 import org.w3c.dom.events.Event
 import org.w3c.dom.events.MouseEvent
 
-import java.util.*
-import java.util.function.BiConsumer
-import java.util.function.BiFunction
-import java.util.function.Function
-
 import kotlin.browser.document
 import kotlin.browser.window
 
@@ -280,7 +275,7 @@ class ConnectedComponent<B, L>(
     }
 
     private fun boxAtPoint(point: Point): B? {
-        return boxes.values.stream().filter({ box -> boxPosFunct(box).contains(point) }).findFirst().orElse(null)
+        return boxes.values.filter({ box -> boxPosFunct(box).contains(point) }).firstOrNull()
     }
 
     private fun pointFromMouseEvent(event: MouseEvent): Point {
@@ -311,7 +306,7 @@ class ConnectedComponent<B, L>(
     fun removeBox(box: B) {
         val id = boxIdFunct(box)
         boxes.remove(id)
-        lines.removeIf { line -> startFunct(line) == id || endFunct(line) == id }
+        lines.removeAll { line -> startFunct(line) == id || endFunct(line) == id }
         scheduleFrame()
     }
 
