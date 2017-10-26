@@ -83,6 +83,7 @@ class FlowChartEntryPoint : EntryPoint {
                 Date(),//TODO why can't i actually pass in values...
                 Point(300.0, 10.0)
         )
+        boxesAndLines.addBox(karen)
 
         val abigail = Person(
                 nextId(),

@@ -70,7 +70,7 @@ class ConnectedComponent<B, L>(
     private val drawBoxTool: HTMLButtonElement
     private val drawLineTool: HTMLButtonElement
     private val moveTool: HTMLButtonElement
-    private val canvasWrapper: HTMLCanvasElement
+    private val canvasWrapper: HTMLDivElement
     private val canvas: HTMLCanvasElement
 
     //logic
@@ -112,7 +112,7 @@ class ConnectedComponent<B, L>(
         moveTool.innerHTML = "Move"
         moveTool.className = "button"
 
-        canvasWrapper = document.createElement("div") as HTMLCanvasElement
+        canvasWrapper = document.createElement("div") as HTMLDivElement
         canvasWrapper.className = "canvas-wrapper"
 
 
@@ -343,12 +343,12 @@ class ConnectedComponent<B, L>(
         val context = canvas.getContext("2d") as CanvasRenderingContext2D
 
         //resize to fit, if needed (this is ... expensive to check, and wrong if we are on a devicePixelRatio!=1 screen)
-        val size = js("canvasWrapper.boundingClientRect")
-        if (size.height != canvas.height || size.width != canvas.width) {
+        val size = canvasWrapper.getBoundingClientRect()
+        if (size.height.toInt() != canvas.height || size.width.toInt() != canvas.width) {
             //assuming there is something to be gained by not tweaking these directly, but should measure...
             //            Double devicePixelRatio = ((JsPropertyMap<Double>) DomGlobal.window).get("devicePixelRatio");
-            canvas.height = size.height - 10// * devicePixelRatio;
-            canvas.width = size.width// * devicePixelRatio;
+            canvas.height = size.height.toInt() - 10// * devicePixelRatio;
+            canvas.width = size.width.toInt()// * devicePixelRatio;
             //            canvas.style.height = HeightUnionType.of(size.height + "px");
             //            canvas.style.width = WidthUnionType.of(size.height + "px");
         }
