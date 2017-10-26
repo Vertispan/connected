@@ -1,0 +1,9 @@
+Either this to be fast
+
+$ java -jar path/to/closure-compiler-1.0-SNAPSHOT.jar --compilation_level WHITESPACE_ONLY --js_output_file out/app.js --js target/js/lib/kotlin.js --js target/js/connected.js
+
+or this to do _some_ optimizing
+
+$ java -jar path/to/closure-compiler-1.0-SNAPSHOT.jar --compilation_level SIMPLE_OPTIMIZATIONS --js_output_file out/app.js --js target/js/lib/kotlin.js --js target/js/connected.js
+
+but ADVANCED_OPTIMIZATIONS will error out at this time.
