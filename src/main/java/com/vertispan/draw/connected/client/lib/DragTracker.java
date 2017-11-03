@@ -21,8 +21,8 @@ package com.vertispan.draw.connected.client.lib;
  */
 
 import com.vertispan.draw.connected.client.blank.SelectionEvent.HandlerRegistration;
-import elemental2.dom.Event;
-import elemental2.dom.MouseEvent;
+import org.teavm.jso.dom.events.Event;
+import org.teavm.jso.dom.events.MouseEvent;
 
 /**
  * Mouse tracking through preview events, with a callback interface to implement behavior for a given drag
@@ -46,7 +46,7 @@ public class DragTracker {
 
     private DragHandling handler;
 
-    public void start(elemental2.dom.Event event, DragHandling handler) {
+    public void start(Event event, DragHandling handler) {
         this.handler = handler;
         assert !dragging;
         dragging = true;
@@ -56,7 +56,7 @@ public class DragTracker {
         //TODO switch to User, don't yet know the new metaphor for this...
         mouseEventPreview = com.vertispan.draw.connected.client.blank.Event.addNativePreviewHandler(captured -> {
             Event nativeEvent = captured.getNativeEvent();
-            switch (nativeEvent.type) {
+            switch (nativeEvent.getType()) {
                 case "mousemove":
                     move((MouseEvent) nativeEvent);
                     break;

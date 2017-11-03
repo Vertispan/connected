@@ -28,7 +28,7 @@ import com.vertispan.draw.connected.client.data.Person;
 import com.vertispan.draw.connected.client.lib.ConnectedComponent;
 import com.vertispan.draw.connected.client.lib.Point;
 import com.vertispan.draw.connected.client.lib.Rect;
-import elemental2.dom.DomGlobal;
+import org.teavm.jso.browser.Window;
 
 import java.util.Date;
 
@@ -66,7 +66,7 @@ public class FlowChartEntryPoint implements EntryPoint {
             if (person.getBirthday() == null) {
                 person.setBirthday(new Date());
             }
-            String newName = DomGlobal.prompt("change name?", person.getName());
+            String newName = Window.prompt("change name?", person.getName());
             person.setName(newName);
             boxesAndLines.updateBox(person);
         });
@@ -105,6 +105,6 @@ public class FlowChartEntryPoint implements EntryPoint {
 
 
         // Actually add the element to the body
-        DomGlobal.document.body.appendChild(boxesAndLines.getElement());
+        Window.current().getDocument().getBody().appendChild(boxesAndLines.getElement());
     }
 }

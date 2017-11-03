@@ -21,24 +21,24 @@ package com.vertispan.draw.connected.client.blank;
  */
 
 import com.vertispan.draw.connected.client.blank.SelectionEvent.HandlerRegistration;
-import elemental2.dom.DomGlobal;
-import elemental2.dom.EventListener;
+import org.teavm.jso.browser.Window;
+import org.teavm.jso.dom.events.EventListener;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static elemental2.dom.DomGlobal.window;
 
 /**
  * Created by colin on 9/16/17.
  */
 public class Event {
-    private static final EventListener dispatchCapturedMouseEvent;
-    private static final EventListener dispatchCapturedEvent;
+    private static final EventListener<?> dispatchCapturedMouseEvent;
+    private static final EventListener<?> dispatchCapturedEvent;
     private static final List<NativePreviewHandler> previewHandlers = new ArrayList<>();
     static {
         dispatchCapturedEvent = Event::dispatchCapturedEvent;
         dispatchCapturedMouseEvent = Event::dispatchCapturedEvent;
+
+        Window window = Window.current();
 
         window.addEventListener("click", dispatchCapturedMouseEvent, true);
         window.addEventListener("dblclick", dispatchCapturedMouseEvent, true);
@@ -71,12 +71,12 @@ public class Event {
         private boolean isCanceled = false;
         private boolean isConsumed = false;
         private boolean isFirstHandler = false;
-        private elemental2.dom.Event nativeEvent;
+        private org.teavm.jso.dom.events.Event nativeEvent;
 
         private NativePreviewEvent() {
         }
 
-        public elemental2.dom.Event getNativeEvent() {
+        public org.teavm.jso.dom.events.Event getNativeEvent() {
             return nativeEvent;
         }
     }
@@ -87,7 +87,7 @@ public class Event {
         return () -> previewHandlers.remove(handler);
     }
 
-    private static void dispatchCapturedEvent(elemental2.dom.Event event) {
+    private static void dispatchCapturedEvent(org.teavm.jso.dom.events.Event event) {
         //in theory we could branch here and support gwt-user's old mouse capture tools
 
         //all handlers get a crack at this, then we check if it was canceled

@@ -23,6 +23,8 @@ package com.vertispan.draw.connected.client.blank;
 import elemental2.dom.DomGlobal;
 import elemental2.dom.Element;
 import elemental2.dom.HTMLStyleElement;
+import org.teavm.jso.browser.Window;
+import org.teavm.jso.dom.html.HTMLElement;
 
 import static elemental2.dom.DomGlobal.document;
 
@@ -31,8 +33,8 @@ import static elemental2.dom.DomGlobal.document;
  */
 public class StyleInjector {
     public static void inject(String cssContent) {
-        HTMLStyleElement style = (HTMLStyleElement) document.createElement("style");
-        style.appendChild(document.createTextNode(cssContent));
-        document.head.appendChild(style);
+        HTMLElement style = (HTMLElement) Window.current().getDocument().createElement("style");
+        style.appendChild(Window.current().getDocument().createTextNode(cssContent));
+        Window.current().getDocument().getHead().appendChild(style);
     }
 }

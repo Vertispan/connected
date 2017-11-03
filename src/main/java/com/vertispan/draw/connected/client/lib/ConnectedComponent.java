@@ -27,18 +27,21 @@ import com.vertispan.draw.connected.client.blank.SelectionEvent.HasSelectionHand
 import com.vertispan.draw.connected.client.blank.SelectionEvent.SelectionHandler;
 import com.vertispan.draw.connected.client.blank.StyleInjector;
 import com.vertispan.draw.connected.client.lib.DragTracker.DragHandling;
-import elemental2.dom.*;
-import elemental2.dom.CanvasRenderingContext2D.FillStyleUnionType;
-import elemental2.dom.CanvasRenderingContext2D.StrokeStyleUnionType;
-import elemental2.dom.Element;
-import elemental2.dom.Event;
+import org.teavm.jso.browser.Window;
+import org.teavm.jso.canvas.CanvasRenderingContext2D;
+import org.teavm.jso.dom.events.Event;
+import org.teavm.jso.dom.events.MouseEvent;
+import org.teavm.jso.dom.html.HTMLButtonElement;
+import org.teavm.jso.dom.html.HTMLCanvasElement;
+import org.teavm.jso.dom.html.HTMLElement;
+import org.teavm.jso.dom.html.TextRectangle;
+import org.teavm.jso.dom.xml.Element;
+import org.teavm.jso.dom.xml.NodeList;
 
 import java.util.*;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.Function;
-
-import static elemental2.dom.DomGlobal.document;
 
 /**
  * Base "widget" for this project. Not a GWT Widget, but wraps a dom element
@@ -63,11 +66,11 @@ public class ConnectedComponent<B, L> implements HasSelectionHandlers<B> {
     private final HandlerManager handlerManager = new HandlerManager(this);
 
     //dom
-    private Element root;
+    private HTMLElement root;
     private HTMLButtonElement drawBoxTool;
     private HTMLButtonElement drawLineTool;
     private HTMLButtonElement moveTool;
-    private Element canvasWrapper;
+    private HTMLElement canvasWrapper;
     private HTMLCanvasElement canvas;
 
     //logic
@@ -102,34 +105,34 @@ public class ConnectedComponent<B, L> implements HasSelectionHandlers<B> {
         this.endFunct = endFunct;
         this.lineCreator = lineCreator;
 
-        root = document.createElement("div");
-        root.className = "boxes-and-lines";
-        Element buttonBar = document.createElement("div");
-        buttonBar.classList.add("button-bar");
+        root = Window.current().getDocument().createElement("div");
+        root.setClassName("boxes-and-lines");
+        HTMLElement buttonBar = Window.current().getDocument().createElement("div");
+        buttonBar.setClassName("button-bar");
 
-        drawBoxTool = (HTMLButtonElement) document.createElement("button");
-        drawBoxTool.onclick = this::drawBox;
-        drawBoxTool.innerHTML = "Draw Box";
-        drawBoxTool.className = "button";
+        drawBoxTool = (HTMLButtonElement) Window.current().getDocument().createElement("button");
+        drawBoxTool.addEventListener("click", this::drawBox);
+        drawBoxTool.setInnerHTML("Draw Box");
+        drawBoxTool.setClassName("button");
 
-        drawLineTool = (HTMLButtonElement) document.createElement("button");
-        drawLineTool.onclick = this::drawLine;
-        drawLineTool.innerHTML = "Draw Line";
-        drawLineTool.className = "button";
+        drawLineTool = (HTMLButtonElement) Window.current().getDocument().createElement("button");
+        drawLineTool.addEventListener("click", this::drawLine);
+        drawLineTool.setInnerHTML("Draw Line");
+        drawLineTool.setClassName("button");
 
-        moveTool = (HTMLButtonElement) document.createElement("button");
-        moveTool.onclick = this::move;
-        moveTool.innerHTML = "Move";
-        moveTool.className = "button";
+        moveTool = (HTMLButtonElement) Window.current().getDocument().createElement("button");
+        moveTool.addEventListener("click", this::move);
+        moveTool.setInnerHTML("Move");
+        moveTool.setClassName("button");
 
-        canvasWrapper = document.createElement("div");
-        canvasWrapper.className = "canvas-wrapper";
+        canvasWrapper = Window.current().getDocument().createElement("div");
+        canvasWrapper.setClassName("canvas-wrapper");
 
 
-        canvas = (HTMLCanvasElement) document.createElement("canvas");
+        canvas = (HTMLCanvasElement) Window.current().getDocument().createElement("canvas");
 //        canvas.width = 1000;
 //        canvas.height = 1000;
-        canvas.onmousedown = this::canvasMouseDown;//use for drags, captured events deal with the rest
+        canvas.addEventListener("onmousedown", this::canvasMouseDown);//use for drags, captured events deal with the rest
 
         //TODO CSS that doesn't look terrible, and HTML template for this whole thing
         buttonBar.appendChild(drawBoxTool);
@@ -157,7 +160,7 @@ public class ConnectedComponent<B, L> implements HasSelectionHandlers<B> {
 
 
         //TODO this will leak after widget is detached...
-        DomGlobal.window.addEventListener("resize", event -> scheduleFrame());
+        Window.current().addEventListener("resize", event -> scheduleFrame());
     }
 
     public Element getElement() {
@@ -180,7 +183,7 @@ public class ConnectedComponent<B, L> implements HasSelectionHandlers<B> {
             //turn off all buttons
             NodeList<Element> buttons = root.querySelectorAll("button.button");
             for (int i = 0; i < buttons.getLength(); i++) {
-                buttons.getAt(i).classList.remove("button-on");
+                buttons.get(i).classList.remove("button-on");
             }
 
             //turn on currently set button
@@ -360,7 +363,7 @@ public class ConnectedComponent<B, L> implements HasSelectionHandlers<B> {
             return;
         }
         frameScheduled = true;
-        DomGlobal.requestAnimationFrame(timestamp -> {
+        Window.requestAnimationFrame(timestamp -> {
             frameScheduled = false;
             draw();
             return null;
@@ -371,12 +374,12 @@ public class ConnectedComponent<B, L> implements HasSelectionHandlers<B> {
         final CanvasRenderingContext2D context = (CanvasRenderingContext2D) (Object) canvas.getContext("2d");
 
         //resize to fit, if needed (this is ... expensive to check, and wrong if we are on a devicePixelRatio!=1 screen)
-        ClientRect size = canvasWrapper.getBoundingClientRect();
-        if (size.height != canvas.height || size.width != canvas.width) {
+        TextRectangle size = canvasWrapper.getBoundingClientRect();
+        if (size.getHeight() != canvas.getHeight() || size.getWidth() != canvas.getWidth()) {
             //assuming there is something to be gained by not tweaking these directly, but should measure...
 //            Double devicePixelRatio = ((JsPropertyMap<Double>) DomGlobal.window).get("devicePixelRatio");
-            canvas.height = size.height - 10;// * devicePixelRatio;
-            canvas.width = size.width;// * devicePixelRatio;
+            canvas.setHeight(size.getHeight() - 10);// * devicePixelRatio;
+            canvas.setWidth(size.getWidth());// * devicePixelRatio;
 //            canvas.style.height = HeightUnionType.of(size.height + "px");
 //            canvas.style.width = WidthUnionType.of(size.height + "px");
         }
@@ -384,11 +387,11 @@ public class ConnectedComponent<B, L> implements HasSelectionHandlers<B> {
 
         //remove all current content
         //TODO in the future detect changes and apply a clip?
-        context.clearRect(0, 0, canvas.width, canvas.height);
+        context.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
 
-        context.fillStyle = FillStyleUnionType.of("#ffffff");
-        context.strokeStyle = StrokeStyleUnionType.of("#000000");
-        context.font = "14px sans-serif";
+        context.setFillStyle("#ffffff");
+        context.setStrokeStyle("#000000");
+        context.setFont("14px sans-serif");
 
         //draw all lines, then all boxes. boxes have a fill, so the lines always are from the center of a box, starting at the edge
         lines.forEach(line -> {
@@ -419,11 +422,11 @@ public class ConnectedComponent<B, L> implements HasSelectionHandlers<B> {
             int padding = 10;
             int fontHeight = 14;
             String[] lines = boxTextFunct.apply(box).split("\n");
-            context.fillStyle = FillStyleUnionType.of("#000000");
+            context.setFillStyle("#000000");
             for (int lineNo = 0; lineNo < lines.length; lineNo++) {
                 context.fillText(lines[lineNo], padding + position.getX(), fontHeight + padding + position.getY() + fontHeight * lineNo);
             }
-            context.fillStyle = FillStyleUnionType.of("#ffffff");
+            context.setFillStyle("#ffffff");
         });
 
     }
