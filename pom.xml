@@ -87,26 +87,21 @@
           </execution>
         </executions>
       </plugin>
+      <!-- unpack kotlin.js to target/classes/lib for example index.html -->
       <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-dependency-plugin</artifactId>
         <executions>
           <execution>
-            <id>unpack</id>
-            <phase>compile</phase>
+            <id>extract-kotlinjs</id>
+            <phase>prepare-package</phase>
             <goals>
-              <goal>unpack</goal>
+              <goal>unpack-dependencies</goal>
             </goals>
             <configuration>
-              <artifactItems>
-                <artifactItem>
-                  <groupId>org.jetbrains.kotlin</groupId>
-                  <artifactId>kotlin-stdlib-js</artifactId>
-                  <version>${kotlin.version}</version>
-                  <outputDirectory>${project.build.directory}/js/lib</outputDirectory>
-                  <includes>*.js</includes>
-                </artifactItem>
-              </artifactItems>
+              <includeArtifactIds>kotlin-stdlib-js</includeArtifactIds>
+              <outputDirectory>${build.outputDirectory}/lib</outputDirectory>
+              <includes>**\/*.js</includes>
+              <excludes>**\/*.meta.js</excludes> <!-- we don't need meta.js files in runtime -->
             </configuration>
           </execution>
         </executions>
