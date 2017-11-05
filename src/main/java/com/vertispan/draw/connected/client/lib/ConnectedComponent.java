@@ -311,7 +311,14 @@ public class ConnectedComponent<B, L> implements HasSelectionHandlers<B> {
     }
 
     private B boxAtPoint(Point point) {
-        return boxes.values().stream().filter(box -> boxPosFunct.apply(box).contains(point)).findFirst().orElse(null);
+        for (B box : boxes.values()) {
+            if (boxPosFunct.apply(box).contains(point)) {
+                return box;
+            }
+        }
+
+        return null;
+//        return boxes.values().stream().filter(box -> boxPosFunct.apply(box).contains(point)).findFirst().orElse(null);
     }
 
     private Point pointFromMouseEvent(MouseEvent event) {
@@ -340,7 +347,14 @@ public class ConnectedComponent<B, L> implements HasSelectionHandlers<B> {
     public void removeBox(B box) {
         String id = boxIdFunct.apply(box);
         boxes.remove(id);
-        lines.removeIf(line -> startFunct.apply(line).equals(id) || endFunct.apply(line).equals(id));
+
+        for (L line : lines) {
+            if (startFunct.apply(line).equals(id) || endFunct.apply(line).equals(id)) {
+                lines.remove(line);
+            }
+        }
+//        lines.removeIf(line -> startFunct.apply(line).equals(id) || endFunct.apply(line).equals(id));
+
         scheduleFrame();
     }
     public void updateBox(B box) {
