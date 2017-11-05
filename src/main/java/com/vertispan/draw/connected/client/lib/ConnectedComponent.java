@@ -111,17 +111,17 @@ public class ConnectedComponent<B, L> implements HasSelectionHandlers<B> {
         buttonBar.setClassName("button-bar");
 
         drawBoxTool = (HTMLButtonElement) Window.current().getDocument().createElement("button");
-        drawBoxTool.addEventListener("click", this::drawBox);
+        drawBoxTool.addEventListener("click", event1 -> drawBox(event1));
         drawBoxTool.setInnerHTML("Draw Box");
         drawBoxTool.setClassName("button");
 
         drawLineTool = (HTMLButtonElement) Window.current().getDocument().createElement("button");
-        drawLineTool.addEventListener("click", this::drawLine);
+        drawLineTool.addEventListener("click", event1 -> drawLine(event1));
         drawLineTool.setInnerHTML("Draw Line");
         drawLineTool.setClassName("button");
 
         moveTool = (HTMLButtonElement) Window.current().getDocument().createElement("button");
-        moveTool.addEventListener("click", this::move);
+        moveTool.addEventListener("click", event1 -> move(event1));
         moveTool.setInnerHTML("Move");
         moveTool.setClassName("button");
 
@@ -132,7 +132,7 @@ public class ConnectedComponent<B, L> implements HasSelectionHandlers<B> {
         canvas = (HTMLCanvasElement) Window.current().getDocument().createElement("canvas");
 //        canvas.width = 1000;
 //        canvas.height = 1000;
-        canvas.addEventListener("onmousedown", this::canvasMouseDown);//use for drags, captured events deal with the rest
+        canvas.addEventListener("mousedown", this::canvasMouseDown);//use for drags, captured events deal with the rest
 
         //TODO CSS that doesn't look terrible, and HTML template for this whole thing
         buttonBar.appendChild(drawBoxTool);
@@ -183,19 +183,19 @@ public class ConnectedComponent<B, L> implements HasSelectionHandlers<B> {
             //turn off all buttons
             NodeList<Element> buttons = root.querySelectorAll("button.button");
             for (int i = 0; i < buttons.getLength(); i++) {
-                buttons.get(i).classList.remove("button-on");
+                buttons.get(i).getClassList().remove("button-on");
             }
 
             //turn on currently set button
             switch (drawMode) {
                 case MOVE:
-                    moveTool.classList.add("button-on");
+                    moveTool.getClassList().add("button-on");
                     break;
                 case DRAW_BOX:
-                    drawBoxTool.classList.add("button-on");
+                    drawBoxTool.getClassList().add("button-on");
                     break;
                 case DRAW_LINE:
-                    drawLineTool.classList.add("button-on");
+                    drawLineTool.getClassList().add("button-on");
                     break;
             }
 
@@ -205,20 +205,21 @@ public class ConnectedComponent<B, L> implements HasSelectionHandlers<B> {
         }
     }
 
-    private Void drawBox(Event event) {
+    private void drawBox(Event event) {
         setDrawMode(DrawMode.DRAW_BOX);
-        return null;
+
+//        return null;
     }
-    private Void drawLine(Event event) {
+    private void drawLine(Event event) {
         setDrawMode(DrawMode.DRAW_LINE);
-        return null;
+//        return null;
     }
-    private Void move(Event event) {
+    private void move(Event event) {
         setDrawMode(DrawMode.MOVE);
-        return null;
+//        return null;
     }
 
-    private Void canvasMouseDown(Event event) {
+    private void canvasMouseDown(Event event) {
         if (drawMode == DrawMode.DRAW_BOX) {
             //track mouse, but use drag tool to detect click to avoid moving to a new place
             dragTracker.start(event, new DragHandling() {
@@ -231,7 +232,7 @@ public class ConnectedComponent<B, L> implements HasSelectionHandlers<B> {
                     editBox(box);
                 }
             });
-            return null;
+//            return null;
         } else if (drawMode == DrawMode.DRAW_LINE) {
             //mark the box where we are starting
             startingBoxForNewLine = boxAtPoint(pointFromMouseEvent((MouseEvent) event));
@@ -306,7 +307,7 @@ public class ConnectedComponent<B, L> implements HasSelectionHandlers<B> {
             });
         }
 
-        return null;
+//        return null;
     }
 
     private B boxAtPoint(Point point) {
@@ -315,7 +316,7 @@ public class ConnectedComponent<B, L> implements HasSelectionHandlers<B> {
 
     private Point pointFromMouseEvent(MouseEvent event) {
         //offset x/y relies on the mouse staying over the element
-        return new Point(event.pageX - canvas.offsetLeft, event.pageY - canvas.offsetTop);
+        return new Point(event.getPageX() - canvas.getOffsetLeft(), event.getPageY() - canvas.getOffsetTop());
     }
 
     private void editBox(B box) {
@@ -366,7 +367,6 @@ public class ConnectedComponent<B, L> implements HasSelectionHandlers<B> {
         Window.requestAnimationFrame(timestamp -> {
             frameScheduled = false;
             draw();
-            return null;
         });
     }
     private void draw() {

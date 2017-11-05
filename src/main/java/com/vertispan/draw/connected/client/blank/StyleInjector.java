@@ -20,13 +20,8 @@ package com.vertispan.draw.connected.client.blank;
  * #L%
  */
 
-import elemental2.dom.DomGlobal;
-import elemental2.dom.Element;
-import elemental2.dom.HTMLStyleElement;
 import org.teavm.jso.browser.Window;
 import org.teavm.jso.dom.html.HTMLElement;
-
-import static elemental2.dom.DomGlobal.document;
 
 /**
  * Created by colin on 9/16/17.

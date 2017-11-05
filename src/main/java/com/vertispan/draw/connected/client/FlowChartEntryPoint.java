@@ -107,4 +107,8 @@ public class FlowChartEntryPoint implements EntryPoint {
         // Actually add the element to the body
         Window.current().getDocument().getBody().appendChild(boxesAndLines.getElement());
     }
+
+    public static void main(String[] ignore) {
+        new FlowChartEntryPoint().onModuleLoad();
+    }
 }
