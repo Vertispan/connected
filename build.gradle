@@ -1,10 +1,10 @@
 buildscript {
-//    ext.kotlin_version = '1.2.0-beta-88'
-    ext.kotlin_version = '1.1.4-eap-33'
+//    ext.kotlin_version = '1.2.0-rc-39'
+    ext.kotlin_version = '1.1.51'
 
     repositories {
-        maven { url 'http://dl.bintray.com/kotlin/kotlin-eap-1.1' }
         maven { url 'http://dl.bintray.com/kotlin/kotlin-eap-1.2' }
+        maven { url 'http://dl.bintray.com/kotlin/kotlin-eap-1.1' }
         maven { url "https://plugins.gradle.org/m2/" }
         mavenCentral()
     }
