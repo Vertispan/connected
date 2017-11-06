@@ -1,0 +1,6 @@
+.idea
+.gradle
+target
+./gradle
+./gradlew.bat
+./gradlew
