@@ -21,7 +21,7 @@ apply plugin: 'kotlin-dce-js'
 node {
     download = true
 }*/
-
+runDceKotlinJs.keep "connected.com.vertispan.draw.connected.client.FlowChartEntryPoint.onModuleLoad" , "connected.com.google.gwt.core.client.EntryPoint.onModuleLoad"
 repositories {
     maven { url 'http://dl.bintray.com/kotlin/kotlin-eap-1.1' }
     mavenCentral()
