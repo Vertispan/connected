@@ -130,18 +130,6 @@
                 </configuration>
               </execution>
               <execution>
-                <id>build-js-classpath</id>
-                <phase>process-classes</phase>
-                <goals>
-                  <goal>build-classpath</goal>
-                </goals>
-                <configuration>
-                  <classifier>jszip</classifier>
-                  <type>zip</type>
-                  <outputProperty>js-classpath</outputProperty>
-                </configuration>
-              </execution>
-              <execution>
                 <id>copy-bootstrap</id>
                 <goals>
                   <goal>copy</goal>
@@ -165,11 +153,25 @@
                     </artifactItem>
                     <artifactItem>
                       <groupId>com.vertispan.j2cl</groupId>
+                      <artifactId>gwt-internal-annotations</artifactId>
+                      <version>0.1-SNAPSHOT</version>
+                      <destFileName>gwt-internal-annotations.jar</destFileName>
+                    </artifactItem>
+                    <artifactItem>
+                      <groupId>com.vertispan.j2cl</groupId>
                       <artifactId>bootstrap</artifactId>
                       <version>0.1-SNAPSHOT</version>
                       <classifier>jszip</classifier>
                       <type>zip</type>
                       <destFileName>bootstrap.js.zip</destFileName>
+                    </artifactItem>
+                    <artifactItem>
+                      <groupId>com.google.jsinterop</groupId>
+                      <artifactId>base</artifactId>
+                      <version>1.0.0-beta-1</version>
+                      <classifier>jszip</classifier>
+                      <type>zip</type>
+                      <destFileName>jsinterop-base.js.zip</destFileName>
                     </artifactItem>
                   </artifactItems>
                 </configuration>
@@ -201,15 +203,15 @@
               <mainClass>com.vertispan.j2cl.DevMode</mainClass>
               <arguments>
                 <argument>-classpath</argument>
-                <argument>${java-classpath}:${project.build.directory}/dependency/jre.jar</argument>
+                <argument>${java-classpath}:${project.build.directory}/dependency/jre.jar:${project.build.directory}/dependency/gwt-internal-annotations.jar</argument>
                 <argument>-jsClasspath</argument>
-                <argument>${js-classpath}:${project.build.directory}/dependency/bootstrap.js.zip:${project.build.directory}/dependency/jre.js.zip</argument>
+                <argument>${project.build.directory}/dependency/bootstrap.js.zip:${project.build.directory}/dependency/jre.js.zip:${project.build.directory}/dependency/jsinterop-base.js.zip</argument>
                 <argument>-out</argument>
                 <argument>out</argument>
                 <argument>-src</argument>
                 <argument>src/main/java</argument>
-                <argument>-classes</argument>
-                <argument>target/classes</argument>
+                <argument>-jsZipCache</argument>
+                <argument>jsZipCache</argument>
                 <argument>-entrypoint</argument>
                 <argument>com.vertispan.draw.connected.client.FlowChartEntryPoint</argument>
 
