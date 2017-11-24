@@ -25,7 +25,18 @@
     <dependency>
       <groupId>com.google.elemental2</groupId>
       <artifactId>elemental2-dom</artifactId>
-      <version>1.0.0-beta-1</version>
+      <version>1.0.0-beta-2</version>
+      <exclusions>
+        <exclusion>
+          <groupId>com.google.jsinterop</groupId>
+          <artifactId>base</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>com.google.jsinterop</groupId>
+      <artifactId>base</artifactId>
+      <version>1.0.0-beta-3</version>
     </dependency>
   </dependencies>
 
@@ -54,6 +65,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.1</version>
         <configuration>
           <source>${java.version}</source>
           <target>${java.version}</target>
@@ -61,16 +73,26 @@
       </plugin>
       <!-- Compiles the app to JavaScript -->
       <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>gwt-maven-plugin</artifactId>
-        <version>2.8.1</version>
+        <groupId>com.github.mbarkley</groupId>
+        <artifactId>j2cl-maven-plugin</artifactId>
+        <version>0.1-SNAPSHOT</version>
         <executions>
           <execution>
-            <id>compile-js-gwt</id>
+            <id>j2cl-transpile</id>
+            <phase>compile</phase>
+            <goals>
+              <goal>j2cl-transpile</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>closure-compile</id>
             <phase>prepare-package</phase>
             <goals>
-              <goal>compile</goal>
+              <goal>closure-compile</goal>
             </goals>
+            <configuration>
+              <entrypoint>com.vertispan.draw.connected.client.FlowChartEntryPoint</entrypoint>
+            </configuration>
           </execution>
         </executions>
       </plugin>
@@ -168,7 +190,7 @@
                     <artifactItem>
                       <groupId>com.google.jsinterop</groupId>
                       <artifactId>base</artifactId>
-                      <version>1.0.0-beta-1</version>
+                      <version>1.0.0-beta-3</version>
                       <classifier>jszip</classifier>
                       <type>zip</type>
                       <destFileName>jsinterop-base.js.zip</destFileName>
