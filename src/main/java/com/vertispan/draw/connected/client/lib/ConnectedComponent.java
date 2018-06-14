@@ -363,7 +363,6 @@ public class ConnectedComponent<B, L> implements HasSelectionHandlers<B> {
         DomGlobal.requestAnimationFrame(timestamp -> {
             frameScheduled = false;
             draw();
-            return null;
         });
     }
     private void draw() {
@@ -375,8 +374,8 @@ public class ConnectedComponent<B, L> implements HasSelectionHandlers<B> {
         if (size.height != canvas.height || size.width != canvas.width) {
             //assuming there is something to be gained by not tweaking these directly, but should measure...
 //            Double devicePixelRatio = ((JsPropertyMap<Double>) DomGlobal.window).get("devicePixelRatio");
-            canvas.height = size.height - 10;// * devicePixelRatio;
-            canvas.width = size.width;// * devicePixelRatio;
+            canvas.height = (int) (size.height - 10);// * devicePixelRatio;
+            canvas.width = (int) size.width;// * devicePixelRatio;
 //            canvas.style.height = HeightUnionType.of(size.height + "px");
 //            canvas.style.width = WidthUnionType.of(size.height + "px");
         }

@@ -17,12 +17,6 @@
  * limitations under the License.
  * #L%
  */
-var internalJsUtil = goog.require('jsinterop.base.InternalJsUtil');
-
-// TODO build jsinterop-base correctly
-// Monkeypatch the bits of jsinterop-base we use
-internalJsUtil.getIndexed=function(array, index) { return array[index]; };
-internalJsUtil.getLength=function(array) { return array.length; };
 
 // Defer this command, since this will be folded into the FlowChartEntryPoint js impl,
 // and if it runs right away, will not have its dependencies resolved yet (at least while
