@@ -20,7 +20,16 @@ package com.vertispan.draw.connected.client.blank;
  * #L%
  */
 
-public class SelectionEvent<T> {
+import com.vertispan.draw.connected.client.blank.SelectionEvent.SelectionHandler;
+import org.gwtproject.event.shared.Event;
+import org.gwtproject.event.shared.HandlerRegistration;
+
+public class SelectionEvent<T> extends Event<SelectionHandler<T>> {
+    private static final Type<SelectionEvent<?>> TYPE = new Type<>();
+
+    public static Type<SelectionHandler<?>> getType() {
+        return (Type) TYPE;
+    }
 
     public interface SelectionHandler<T> {
         void onSelection(SelectionEvent<T> var1);
@@ -30,11 +39,6 @@ public class SelectionEvent<T> {
 
         void fireEvent(SelectionEvent<T> event);
     }
-
-    public interface HandlerRegistration {
-        void removeHandler();
-    }
-
 
     /**
      * Fires a selection event on all registered handlers in the handler
@@ -71,5 +75,10 @@ public class SelectionEvent<T> {
 
     protected void dispatch(SelectionHandler<T> handler) {
         handler.onSelection(this);
+    }
+
+    @Override
+    public Type<SelectionHandler<T>> getAssociatedType() {
+        return (Type) TYPE;
     }
 }

@@ -20,9 +20,9 @@ package com.vertispan.draw.connected.client.lib;
  * #L%
  */
 
-import com.vertispan.draw.connected.client.blank.SelectionEvent.HandlerRegistration;
 import elemental2.dom.Event;
 import elemental2.dom.MouseEvent;
+import org.gwtproject.event.shared.HandlerRegistration;
 
 /**
  * Mouse tracking through preview events, with a callback interface to implement behavior for a given drag

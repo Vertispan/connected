@@ -27,6 +27,11 @@
       <artifactId>elemental2-dom</artifactId>
       <version>1.0.0-SNAPSHOT</version>
     </dependency>
+    <dependency>
+      <groupId>org.gwtproject.event</groupId>
+      <artifactId>gwt-event</artifactId>
+      <version>HEAD-SNAPSHOT</version>
+    </dependency>
   </dependencies>
 
   <build>
@@ -187,10 +192,6 @@
             <configuration>
               <includeProjectDependencies>false</includeProjectDependencies>
               <includePluginDependencies>true</includePluginDependencies>
-              <!--<executableDependency>-->
-                <!--<groupId>com.vertispan.j2cl</groupId>-->
-                <!--<artifactId>build-tools</artifactId>-->
-              <!--</executableDependency>-->
               <includeProjectDependencies>false</includeProjectDependencies>
               <mainClass>com.vertispan.j2cl.DevMode</mainClass>
               <arguments>
@@ -230,6 +231,12 @@
       <url>https://repo.vertispan.com/j2cl</url>
       <releases><enabled>true</enabled></releases>
       <snapshots><enabled>true</enabled></snapshots>
+    </repository>
+    <repository>
+      <id>vertispan-gwt-snapshots</id>
+      <url>https://repo.vertispan.com/gwt-snapshot/</url>
+      <releases><enabled>true</enabled></releases>
+      <snapshots><enabled>false</enabled></snapshots>
     </repository>
   </repositories>
   <pluginRepositories>

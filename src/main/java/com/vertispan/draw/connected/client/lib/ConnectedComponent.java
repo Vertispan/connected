@@ -20,9 +20,7 @@ package com.vertispan.draw.connected.client.lib;
  * #L%
  */
 
-import com.vertispan.draw.connected.client.blank.HandlerManager;
 import com.vertispan.draw.connected.client.blank.SelectionEvent;
-import com.vertispan.draw.connected.client.blank.SelectionEvent.HandlerRegistration;
 import com.vertispan.draw.connected.client.blank.SelectionEvent.HasSelectionHandlers;
 import com.vertispan.draw.connected.client.blank.SelectionEvent.SelectionHandler;
 import com.vertispan.draw.connected.client.blank.StyleInjector;
@@ -32,6 +30,9 @@ import elemental2.dom.CanvasRenderingContext2D.FillStyleUnionType;
 import elemental2.dom.CanvasRenderingContext2D.StrokeStyleUnionType;
 import elemental2.dom.Element;
 import elemental2.dom.Event;
+import org.gwtproject.event.shared.EventBus;
+import org.gwtproject.event.shared.HandlerRegistration;
+import org.gwtproject.event.shared.SimpleEventBus;
 
 import java.util.*;
 import java.util.function.BiConsumer;
@@ -60,7 +61,7 @@ public class ConnectedComponent<B, L> implements HasSelectionHandlers<B> {
 //        void request();
 //    }
 
-    private final HandlerManager handlerManager = new HandlerManager(this);
+    private final EventBus handlerManager = new SimpleEventBus();
 
     //dom
     private Element root;
@@ -165,7 +166,7 @@ public class ConnectedComponent<B, L> implements HasSelectionHandlers<B> {
     }
 
     public HandlerRegistration addSelectionHandler(SelectionHandler<B> selectionHandler) {
-        return handlerManager.addHandler(SelectionEvent.class, selectionHandler);
+        return handlerManager.addHandler(SelectionEvent.getType(), selectionHandler);
     }
 
 

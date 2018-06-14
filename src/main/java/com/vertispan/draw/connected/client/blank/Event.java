@@ -20,9 +20,8 @@ package com.vertispan.draw.connected.client.blank;
  * #L%
  */
 
-import com.vertispan.draw.connected.client.blank.SelectionEvent.HandlerRegistration;
-import elemental2.dom.DomGlobal;
 import elemental2.dom.EventListener;
+import org.gwtproject.event.shared.HandlerRegistration;
 
 import java.util.ArrayList;
 import java.util.List;
