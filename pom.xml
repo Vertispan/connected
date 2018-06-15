@@ -235,8 +235,8 @@
     <repository>
       <id>vertispan-gwt-snapshots</id>
       <url>https://repo.vertispan.com/gwt-snapshot/</url>
-      <releases><enabled>true</enabled></releases>
-      <snapshots><enabled>false</enabled></snapshots>
+      <releases><enabled>false</enabled></releases>
+      <snapshots><enabled>true</enabled></snapshots>
     </repository>
   </repositories>
   <pluginRepositories>
