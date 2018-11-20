@@ -145,7 +145,7 @@
                     <artifactItem>
                       <groupId>com.vertispan.j2cl</groupId>
                       <artifactId>jre</artifactId>
-                      <version>0.1-SNAPSHOT</version>
+                      <version>0.2-SNAPSHOT</version>
                       <classifier>jszip</classifier>
                       <type>zip</type>
                       <destFileName>jre.js.zip</destFileName>
@@ -153,19 +153,19 @@
                     <artifactItem>
                       <groupId>com.vertispan.j2cl</groupId>
                       <artifactId>jre</artifactId>
-                      <version>0.1-SNAPSHOT</version>
+                      <version>0.2-SNAPSHOT</version>
                       <destFileName>jre.jar</destFileName>
                     </artifactItem>
                     <artifactItem>
                       <groupId>com.vertispan.j2cl</groupId>
                       <artifactId>gwt-internal-annotations</artifactId>
-                      <version>0.1-SNAPSHOT</version>
+                      <version>0.2-SNAPSHOT</version>
                       <destFileName>gwt-internal-annotations.jar</destFileName>
                     </artifactItem>
                     <artifactItem>
                       <groupId>com.vertispan.j2cl</groupId>
                       <artifactId>bootstrap</artifactId>
-                      <version>0.1-SNAPSHOT</version>
+                      <version>0.2-SNAPSHOT</version>
                       <classifier>jszip</classifier>
                       <type>zip</type>
                       <destFileName>bootstrap.js.zip</destFileName>
@@ -214,7 +214,7 @@
               <dependency>
                 <groupId>com.vertispan.j2cl</groupId>
                 <artifactId>build-tools</artifactId>
-                <version>0.1-SNAPSHOT</version>
+                <version>0.2-SNAPSHOT</version>
                 <type>jar</type>
               </dependency>
             </dependencies>
