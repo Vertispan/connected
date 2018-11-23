@@ -32,6 +32,11 @@
       <artifactId>gwt-event</artifactId>
       <version>HEAD-SNAPSHOT</version>
     </dependency>
+    <dependency>
+      <groupId>com.google.jsinterop</groupId>
+      <artifactId>jsinterop-annotations</artifactId>
+      <version>HEAD-SNAPSHOT</version>
+    </dependency>
   </dependencies>
 
   <build>
@@ -235,6 +240,12 @@
     <repository>
       <id>vertispan-gwt-snapshots</id>
       <url>https://repo.vertispan.com/gwt-snapshot/</url>
+      <releases><enabled>false</enabled></releases>
+      <snapshots><enabled>true</enabled></snapshots>
+    </repository>
+    <repository>
+      <id>google-sonatype-snapshots</id>
+      <url>https://oss.sonatype.org/content/repositories/google-snapshots/</url>
       <releases><enabled>false</enabled></releases>
       <snapshots><enabled>true</enabled></snapshots>
     </repository>
