@@ -74,6 +74,14 @@
         <groupId>com.vertispan.j2cl</groupId>
         <artifactId>j2cl-maven-plugin</artifactId>
         <version>0.10-SNAPSHOT</version>
+        <executions>
+          <execution>
+            <phase>process-sources</phase>
+            <goals>
+              <goal>build</goal>
+            </goals>
+          </execution>
+        </executions>
         <configuration>
           <entrypoint>com.vertispan.draw.connected.client.FlowChartEntryPoint</entrypoint>
         </configuration>
